@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import "./App.css";
 import lyrics from "./lyrics";
@@ -9,6 +9,21 @@ const App = () => {
   const [nowPlaying, setNowPlaying] = useState(-1);
   const [toRED, setToRED] = useState(JSON.parse(localStorage.getItem("toRED")) || false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [currentTime, setCurrentTime] = useState(0);
+  const audioRef = useRef(null);
+
+  const getCurrentTime = () => {
+    const currentTimer = Math.floor(audioRef.current.currentTime);
+    setCurrentTime(currentTimer);
+  };
+
+  useEffect(() => {
+    console.log(currentTime);
+  }, [currentTime]);
+
+  useEffect(() => {
+    setInterval(getCurrentTime, 100);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -62,6 +77,31 @@ const App = () => {
       return;
     }
     synth.speak(utterance);
+    utterance.onend = () => {
+      setNowPlaying(-1);
+    };
+  };
+
+  const getClassName = (index, number) => {
+    const op1 = `lcc lyc${number} lcplay`;
+    const op0 = `lcc lyc${number}`;
+
+    const thisTime = Number(lyrics[index].endTime.split(":")[0] * 60) + Number(lyrics[index].endTime.split(":")[1]);
+    let prevTime = Number(lyrics[index - 1]?.endTime.split(":")[0] * 60) + Number(lyrics[index - 1]?.endTime.split(":")[1]);
+    if(!prevTime) prevTime = 0;
+
+    if(prevTime < currentTime && currentTime <= thisTime) return op1;
+    if(nowPlaying === index) return op1;
+    else return op0;
+  };
+
+  const getDivClassName = (index) => {
+    const thisTime = Number(lyrics[index].endTime.split(":")[0] * 60) + Number(lyrics[index].endTime.split(":")[1]);
+    let prevTime = Number(lyrics[index - 1]?.endTime.split(":")[0] * 60) + Number(lyrics[index - 1]?.endTime.split(":")[1]);
+    if(!prevTime) prevTime = 0;
+
+    if(prevTime < currentTime && currentTime <= thisTime) return "lyc lcnow";
+    else return "lyc";
   };
 
   return (
@@ -103,25 +143,43 @@ const App = () => {
             return (
               <div 
                 key={index} 
-                className="lyc"
-                onClick={() => {
-                  setNowPlaying(index);
-                  Speak(index);
-                }}
+                className={getDivClassName(index)}
               >
-                <div className={nowPlaying === index ? "lcc lyc1 lcplay" : "lcc lyc1"}>{lyric.chinese}</div>
-                <div className={nowPlaying === index ? "lcc lyc2 lcplay" : "lcc lyc2"}>{lyric.IPA}</div>
-                <div className={nowPlaying === index ? "lcc lyc3 lcplay" : "lcc lyc3"}>{lyric.korean}</div>
+                <div 
+                  className="playbutton" 
+                  onClick={() => {
+                    let prevTime = Number(lyrics[index - 1]?.endTime.split(":")[0] * 60) + Number(lyrics[index - 1]?.endTime.split(":")[1]);
+                    if(!prevTime) prevTime = 0;
+                    audioRef.current.currentTime = prevTime + 1;
+                    audioRef.current.play();
+                  }}></div>
+                <div 
+                  className={getClassName(index, 1)} 
+                  onClick={() => {
+                    setNowPlaying(index);
+                    Speak(index);
+                  }}>{lyric.chinese}</div>
+                <div 
+                  className={getClassName(index, 2)} 
+                  onClick={() => {
+                    setNowPlaying(index);
+                    Speak(index);
+                  }}>{lyric.IPA}</div>
+                <div 
+                  className={getClassName(index, 3)} 
+                  onClick={() => {
+                    setNowPlaying(index);
+                    Speak(index);
+                  }}>{lyric.korean}</div>
               </div>
             );
           })
         }
-
-        <div className="aud">
-          <audio controls className="audio">
-            <source src="audio.mp3" type="audio/mpeg" />
-          </audio>
-        </div>
+      </div>
+      <div className="aud">
+        <audio controls className="audio" ref={audioRef}>
+          <source src="audio.mp3" type="audio/mpeg" />
+        </audio>
       </div>
     </div>
   );

@@ -70,12 +70,12 @@ a {
 }
 
 .lcc{
-  transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out, background 0.2s ease-in-out;
   color: rgba(var(--white), 0.5);
   /* user-select: none; */
   text-align: center;
   word-break: keep-all;
-  width: 80%;
+  width: 70%;
 }
 .lycdiv{
   height: 100vh;
@@ -89,8 +89,9 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: calc(var(--v) * 5) 0;
+  padding: calc(var(--v) * 5) 0;
   /* cursor: pointer; */
+  user-select: none;
 }
 .lyc:hover .lcc, .lcplay{
   color: rgb(var(--white));
@@ -105,12 +106,17 @@ a {
 .lyc2{
   font-size: calc(var(--v) * 4);
   font-weight: 700;
-  margin: calc(var(--v) * 0.2) 0;
+  padding: calc(var(--v) * 0.2) 0;
 }
 .lyc3{
   font-size: calc(var(--v) * 3);
   font-weight: 500;
 }
+
+.lcnow{
+  background: rgb(var(--white), 0.15);
+}
+
 
 .speedCheck{
   margin: calc(var(--v) * 2) 0 0 0;
@@ -184,9 +190,27 @@ a {
 }
 
 .aud{
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  position: fixed;
+  bottom: calc(var(--v) * 4);
+  right: calc(var(--v) * 4);
+}
+
+.playbutton{
+  background: url(play_arrow.svg) no-repeat center center;
+  background-size: contain;
+  width: calc(var(--v) * 8);
+  height: calc(var(--v) * 8);
+  opacity: 0;
+  position:absolute;
+  left: calc(var(--v) * 5);
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.lyc:hover .playbutton{
+  opacity: 0.5;
+}
+
+.lyc:hover .playbutton:hover{
+  opacity: 1;
 }
