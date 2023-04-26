@@ -5,6 +5,7 @@ import lyrics from "./lyrics";
 
 const App = () => {
   const [speed, setSpeed] = useState(Number(localStorage.getItem("speed")) || 70);
+  const [size, setSize] = useState(Number(localStorage.getItem("size")) || 10);
   const [isClosed, setIsClosed] = useState(false);
   const [nowPlaying, setNowPlaying] = useState(-1);
   const [toRED, setToRED] = useState(JSON.parse(localStorage.getItem("toRED")) || false);
@@ -37,9 +38,12 @@ const App = () => {
     localStorage.setItem("speed", speed);
   }, [speed]);
 
-  useEffect(() => {
-    document.documentElement.style.setProperty("--v", windowWidth > 600 ? "6px" : "1vmin");
-  }, [windowWidth]);
+  const setDisplaySize = () => {
+    document.documentElement.style.setProperty("--v", windowWidth > 600 ? `${size / 10 * 6}px` : "1vmin");
+    localStorage.setItem("size", size);
+  };
+  setDisplaySize();
+  useEffect(setDisplaySize, [size, windowWidth]);
 
   useEffect(() => {
     if(toRED) {
@@ -121,6 +125,17 @@ const App = () => {
           />
           <div>{speed}%</div>
         </div>
+        {/* <div className="speedCheck">
+          <div>크기 조절</div>
+          <input 
+            type="range" 
+            min="10" max="30" 
+            value={size} 
+            className="slider" 
+            onChange={(e) => setSize(e.target.value)}
+          />
+          <div>{(size/10).toFixed(1)}배</div>
+        </div> */}
         <div className="close" onClick={() => {
           setIsClosed(!isClosed);
         }}></div>

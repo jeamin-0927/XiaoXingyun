@@ -213,7 +213,7 @@ export default [
     chinese: "一塵不染的真心 與你相遇 好幸運",
     IPA: "Yìchénbùrǎn de zhēnxīn yǔ nǐ xiāngyù hǎo xìngyùn",
     korean: "티끌 하나 없이 순수한 너의 진심이었어 너와 만난 건 정말 행운이야",
-    endTime: "3:45"
+    endTime: "3:44"
   },
   {
     chinese: "可我也失去為你淚流滿面的權利",
@@ -225,7 +225,7 @@ export default [
     chinese: "但願在我看不到的天際",
     IPA: "Dàn yuàn zài wǒ kànbúdào de tiānjì",
     korean: "하지만 바라기를 내가 보이지 않는 하늘 끝에서",
-    endTime: "3:55"
+    endTime: "3:54"
   },
   {
     chinese: "你張開了雙翼 遇見你的註定",
