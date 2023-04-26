@@ -57,7 +57,7 @@ const App = () => {
     utterance.rate = speed / 100;
     const supportZH = synth.getVoices().some(voice => /^zh-CN/.test(voice.lang));
     if(!supportZH) {
-      alert("이 브라우저는 중국어 음성 합성을 지원하지 않습니다.\n갤럭시의 경우, 설정 > 일반 > 글자 읽어주기 > 기본 엔진 옆 톱니바퀴 > 음성 데이터 설치 > 중국어(중국)을 설치해주세요.");
+      alert("이 브라우저는 중국어 음성 합성을 지원하지 않습니다.");
       setNowPlaying(-1);
       return;
     }
