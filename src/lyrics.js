@@ -1,5 +1,11 @@
 export default [
   {
+    chinese: "<視爲中>",
+    IPA: "<Shì wèi zhōng>",
+    korean: "<간주 중>",
+    endTime: "0:14"
+  },
+  {
     chinese: "我聽見雨滴落在青青草地",
     IPA: "wǒ tīngjiàn yǔdī luò zài qīng qīng cǎodì",
     korean: "<1절> 난 푸른 잔디에 빗방울이 떨어지는 소리를 들었어",
