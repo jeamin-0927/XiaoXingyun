@@ -191,6 +191,8 @@ const App = () => {
           })
         }
       </div>
+      <a className="github" href="https://github.com/jeamin-0927/XiaoXingyun">깃허브임 이거보는 개발자 PR할 수 있으면 부탂!!</a>
+
       <div className="aud">
         <audio controls className="audio" ref={audioRef}>
           <source src="audio.mp3" type="audio/mpeg" />
