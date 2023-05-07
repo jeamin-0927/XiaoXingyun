@@ -91,7 +91,7 @@ a {
   justify-content: center;
   padding: calc(var(--v) * 5) 0;
   /* cursor: pointer; */
-  user-select: none;
+  /* user-select: none; */
 }
 .lyc:hover .lcc, .lcplay{
   color: rgb(var(--white));
